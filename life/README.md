@@ -1,15 +1,20 @@
 # Game of life
 
+This project requires to have the [ANSIterminal](https://opam.ocaml.org/packages/ANSITerminal/) package installed. Install it to your opam switch with:
+```bash
+opam install ANSITerminal
+```
+
 From your fork of the repository, go to the `lip/` directory and create a new project:
 ```bash
 dune init project life
 ```
+
 Then, run the following commands from the `lip/life` directory:
 ```
-echo '(using menhir 2.1)' >> dune-project
 sed -i '2i   (libraries ANSITerminal)' lib/dune
-echo -e '(menhir (modules parser))\n(ocamllex lexer)' >> lib/dune
 ```
+
 These commands extend the dune configuration files,
 to instruct the compiler to use the ocamllex and the Menhir tools.
 After running these commands, the file `lib/dune` should look as follows:
@@ -27,6 +32,8 @@ The original project can be run as follows:
 ```bash
 dune exec life n_rounds
 ```
+where `n_rounds` can take on any positive integer (e.g. `100`).
+
 If everything is fine, your console will display a field of asterisks
 which evolves forming strange patterns.
 
@@ -55,7 +62,7 @@ Each cellular automaton in this family is defined by a **S/B rule**,
 i.e. a pair (S,B) of sequences of digits where:
 - S are the numbers of alive neighbours necessary for an alive cell to survive
 - B are the numbers of alive neighbours necessary for a dead cell to born.
-For instance, Conway's Game of life is defined by the rule `S23/3`.
+For instance, Conway's Game of life is defined by the rule `S23/B3`.
 
 The project requires you to work at the following tasks:
 
@@ -70,6 +77,12 @@ alive : bool list list -> int -> int -> Life.Rule.rule -> bool
 Modify [bin/main.ml](bin/main.ml) to pass the rule S23/3 to the `loop` function.
 
 ## Task 2
+
+From `lip/life`, run the following to commands:
+```bash
+echo '(using menhir 2.1)' >> dune-project
+echo -e '(menhir (modules parser))\n(ocamllex lexer)' >> lib/dune
+```
 
 Use the [Menhir](https://gallium.inria.fr/~fpottier/menhir/)
 parser generator to define a syntax of S/B rules.
