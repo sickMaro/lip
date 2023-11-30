@@ -47,9 +47,15 @@ let rec last = function
 
 (* convert nat values to int *)
 let rec int_of_nat = function
-    Zero -> 0
+  | Zero -> 0
   | Succ n -> 1 + int_of_nat n
   | _ -> failwith "int_of_nat on non-nat"
+
+(* check if expression is of type nv*)
+let rec is_nv = function
+  | Zero -> true
+  | Succ n -> is_nv n
+  | _ -> false
 
 (* reduce expression with small-step semantics and convert into value option *)
 let weval_smallstep e = match last (trace e) with
