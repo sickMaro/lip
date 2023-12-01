@@ -1,7 +1,7 @@
 (library
  (name sarithexprLib))
-
-(menhir
+ 
+ (menhir
  (modules parser))
 
 (ocamllex lexer)
