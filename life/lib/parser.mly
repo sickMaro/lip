@@ -25,32 +25,18 @@ prog:
 ;
 
 expr:
-  (* Rule for "S" and "B" sequences *)
-  | S seq1=base_rule; SLASH; B; seq2=base_rule; EOF; { Rule(seq1, seq2) }
+  (* Base rules *)
+  | S; seq1=NUM; SLASH; B; seq2=NUM; EOF; { Rule(string_to_list seq1,string_to_list seq2) }
 
-  (* Rule for "E" sequences (Extended rule) *)
-  | E option(S); seq1=separated_list(COMMA, num_with_range); SLASH; option(B); seq2=separated_list(COMMA, num_with_range); EOF;
+  (* Extended rule *)
+  | E; option(S); seq1=separated_list(COMMA,extended_rule); SLASH; option(B); seq2=separated_list(COMMA,extended_rule); EOF;
     { Rule(List.flatten seq1, List.flatten seq2) }
 ;
 
-base_rule:
-  (* Rule for parsing single digit number on not extended rules *)
-  | n=NUM { string_to_list n }
-
-num:
-  (* Rule for parsing a numeric value *)
-  | n=NUM { int_of_string n }
-;
-
-range:
-  (* Rule for parsing a range of numeric values *)
-  | n1=num; DOTS; n2=num { get_range n1 n2 }
-;
-
-num_with_range:
-  (* Rule for a numeric value or a range *)
-  | n=num { [n] }
-  | r=range { r }
+extended_rule:
+ (* Rule for parsing numbers or range on extended rules *)
+ | n=NUM; { [int_of_string n] }
+ | n1=NUM; DOTS; n2=NUM; { get_range (int_of_string n1)  (int_of_string n2) }
 ;
 
 
