@@ -3,15 +3,15 @@
 }
 
 let white = [' ' '\t']+
-let num = ['0'-'9']?
+let num = ['0'-'9']|['1'-'9']['0'-'9']*
 
 rule read_token =
   parse
   | white { read_token lexbuf } 
   | num { NUM ( Lexing.lexeme lexbuf) } 
-  | 'S'{ START }
-  | 'E' { EXSTART }
-  | 'B' { MID }
+  | 'S'{ S }
+  | 'E' { E }
+  | 'B' { B }
   | '/' { SLASH }
   | ',' { COMMA }
   | ".." { DOTS }

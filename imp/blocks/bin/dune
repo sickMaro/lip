@@ -1,4 +1,4 @@
 (executable
  (public_name blocks)
  (name main)
- (libraries blocksLib))
+ (libraries blocks))
