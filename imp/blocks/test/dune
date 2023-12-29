@@ -1,2 +1,10 @@
+<<<<<<< HEAD
 (test
  (name blocks))
+=======
+(library
+ (name test)
+ (inline_tests) 
+ (preprocess (pps ppx_inline_test))
+ (libraries blocksLib))
+>>>>>>> e7f321e05c1fea529890c0823de9c07488125ee5
